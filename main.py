@@ -1,7 +1,7 @@
 from webptools import grant_permission
 from webptools import cwebp
 from os import listdir
-from os.path import isfile, join, relpath, curdir
+from os.path import isfile, join, relpath, curdir, splitext
 import PySimpleGUI as sg
 
 #if os restricts webptools permission
@@ -17,7 +17,6 @@ layout = [
           [sg.Text('Status', key='-STATUS-', pad=((5,0),(5,0)), font="Helvetica 10")]
         ]
           
-
 window = sg.Window('Compile to webp', layout)
 
 while True:
@@ -42,14 +41,11 @@ while True:
     #cwebp
     onlyfiles = [f for f in listdir(values["-PATH-"]) if isfile(join(values["-PATH-"], f))]
     converted_images = 0
-    compression_rate
+    
     for f in onlyfiles:
       if f.lower().endswith(('.png', '.jpg', '.jpeg')): #TODO: look into valid image file types for webptools
-        path = relpath(join(values["-PATH-"], f), start = curdir) 
-        #TODO: use os.splitext
-        #TODO: create option input field to set quality
-        #TODO: strip file extension and replace with webp
-        cwebp(input_image=path, output_image=f'{path}.webp', option=f"-q {values['-COMPRESSION_RATE-']}", logging="-v") 
+        path = relpath(join(values["-PATH-"], f), start = curdir)
+        cwebp(input_image=path, output_image=f'{splitext(path)[0]}.webp', option=f"-q {values['-COMPRESSION_RATE-']}", logging="-v") 
         converted_images += 1
 
     else:
