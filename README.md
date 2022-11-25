@@ -28,6 +28,6 @@ python main.py
 ```
 
 
-## TODO
+## Caveats
 
-- fix for windows
+- cwebp doesn't seem to work with blank spaces in input path
